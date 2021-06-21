@@ -4,7 +4,6 @@ import Left from "../components/left";
 import Center from '../components/centro'
 import Right from "../components/right";
 import UserContext from "../context/userContext";
-import { io } from 'socket.io-client'
 
 class Main extends React.Component {
 
@@ -28,20 +27,6 @@ class Main extends React.Component {
             }
         ];
         this.state = this.users[Math.floor(Math.random() * this.users.length)];
-    }
-
-    componentDidMount() {
-        const socket = io('ws://localhost:3000')
-
-        socket.on('connect', () => {
-            console.log('Conexion exitosa:', socket.id)
-        })
-
-        socket.emit('message','Servidor echo')
-
-        socket.on('Server:message', (data) => {
-            console.log(data)
-        })
     }
 
     changeUser(e){
