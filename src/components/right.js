@@ -1,12 +1,19 @@
 import React from 'react'
 import css from '../assets/css/app.css'
+import UserContext from "../context/userContext";
 
 class Right extends React.Component {
     render() {
         return(
-            <section id="section-right">
+            <UserContext.Consumer>
+                { user =>
+                    <section id="section-right">
+                        <span>Bienvenido {user.name}</span>
 
-            </section>
+                    </section>
+                }
+            </UserContext.Consumer>
+
         )
     }
 }

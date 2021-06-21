@@ -9,6 +9,7 @@ class Centro extends React.Component {
                 { user =>
                     <section id="section-center">
                         <h1>Hola {user.name}</h1>
+                        <h2> {user.aPaterno}</h2>
                     </section>
                 }
             </UserContext.Consumer>

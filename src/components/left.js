@@ -4,8 +4,6 @@ import css from '../assets/css/app.css'
 
 class Left extends React.Component {
 
-
-
     render() {
         return(
                 <section id="section-left">
