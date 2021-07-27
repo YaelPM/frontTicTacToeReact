@@ -26,23 +26,25 @@ class Game extends React.Component{
     
     render(){
         return(
-            <div className="text-center text-light">
-                <h1 className="title mt-3">Tic Tac Toe</h1>
-                <div className="container  border border-dark">
+            <html>
+                <body>
+                    <h1 className="title mt-3">Tic Tac Toe</h1>
+                    <div id="tablero">
+                        <button></button>
+                        <button></button>
+                        <button></button>
+                        <button></button>
+                        <button></button>
+                        <button></button>
+                        <button></button>
+                        <button></button>
+                        <button></button>
 
-                <For each="item" index="idx" of={ [1,2,3] }>
-                    <div key= {idx} className= "row">
-                        <For each="item2" index="idx2" of={ [1,2,3] }>
-                            <div key= {idx2} className= "col">
-                                <Box></Box>
-                            </div>
-                            
-                        </For>
                     </div>
-                </For>
+                </body>
 
-                </div>
-            </div>
+            </html>
+
         )
     }
 }
