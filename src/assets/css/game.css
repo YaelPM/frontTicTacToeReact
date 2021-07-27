@@ -2,9 +2,9 @@
     font-family: 'Zen Tokyo Zoo';
 }
 
-body{
-    background-color: white;
-    color: blue;
+.container{
+    background-color: rgb(18, 37, 88);
+    color: rgb(255, 255, 255);
 }
 
 h1, h2{
@@ -23,7 +23,7 @@ h1{
     flex-wrap: wrap;
 }
 
-#tablero>button{
+#tablero>input{
     width: 2000px;
     height: 180px;
     max-width: 33.33%;
