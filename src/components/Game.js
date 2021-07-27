@@ -29,46 +29,82 @@ class Game extends React.Component{
             b8:"",
             b9:""
         }
+        this.marca=""
+        this.marcaOpponnent=""
+        this.turno=false
         
     }
     componentDidMount(){
         socket = io.connect('ws://localhost:3000')  //'ws://localhost:3000'
         socket.on('connection',  (data) =>{
             console.log(data)
+            this.marca="X"
+            this.marcaOpponnent="O"
         } )
+
+        socket.emit('listo')
+
+        socket.on('cambio', (data)=>{
+            this.marca="O"
+            this.marcaOpponnent="X"
+            this.turno=true
+        })
+
+        socket.on('clear', ()=>{
+            this.clearBtns()
+            console.log(this.turno)
+        })
 
         socket.on('msj-output-client', (data) => {
             console.log(data);
-            let posicion= data.txt
+            let posicion= data.posicion
             this.setState({
-                [posicion] : "X"
+                [posicion] : data.mrc
             })
+
+            if(this.turno==false){
+                this.turno=true
+            }else{
+                this.turno=false
+            }
+            
         });
 
     }
-    casillaLibre(button){
-        if(button.getText().equals("")){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
     changeValue(e) {
-        let field = e.target.name
-        let msj= e.target.defaultValue
+        let pos = e.target.name
 
-        socket.emit('msj-input-server', { txt: field })
+        if (this.turno==true) {
+            socket.emit('msj-input-server', { posicion: pos, mrc: this.marca })
+            
+            this.setState({
+                [pos] : this.marca
+            })
+
+        }else{
+            console.log("esperar turno")
+        }
         
-        this.setState({
-            [field] : "X"
-        })
         
     }
-    
 
-    marcarCasilla1(){
-         this.setState({})
+    clearBtns(){
+        this.setState({
+            b1:"",
+            b2:"",
+            b3:"",
+            b4:"",
+            b5:"",
+            b6:"",
+            b7:"",
+            b8:"",
+            b9:""
+        })
+    }
+
+    clearEmit(){
+        socket.emit('limpiar')
+        
     }
 
     render(){
@@ -86,6 +122,9 @@ class Game extends React.Component{
                     <input type="Button" name="b7" onClick={this.changeValue.bind(this)} defaultValue={this.state.b7}></input>
                     <input type="Button" name="b8" onClick={this.changeValue.bind(this)} defaultValue={this.state.b8}></input>
                     <input type="Button" name="b9" onClick={this.changeValue.bind(this)} defaultValue={this.state.b9}></input>
+                </div>
+                <div>
+                    <input type="Button" defaultValue="Reiniciar" onClick={this.clearEmit.bind(this)}></input>
                 </div>
             </div>
 

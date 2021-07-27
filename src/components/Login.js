@@ -10,17 +10,7 @@ class Login extends React.Component {
     }
     render() {
         return(
-            <head>
-                <meta charSet="UTF-8"/>
-                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-                        <title>Tic Tac Toe</title>
-                        <link rel="stylesheet"
-                              href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-                              integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
-                              crossOrigin="anonymous"/>
-                            <link rel="stylesheet" href="css/Login2.css"/>
-            </head>,
-            <body>
+            
             <div className="container">
                 <div className="row text-center login-page">
                     <div className="col-md-12 login-form">
@@ -49,7 +39,6 @@ class Login extends React.Component {
                     </div>
                 </div>
             </div>
-            </body>
 
         )
     }
