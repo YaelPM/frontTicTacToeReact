@@ -31,7 +31,6 @@ class Game extends React.Component{
                     <h1 className="title mt-3">Tic Tac Toe</h1>
                     <div id="tablero">
                         <button></button>
-
                         <button></button>
                         <button></button>
                         <button></button>
