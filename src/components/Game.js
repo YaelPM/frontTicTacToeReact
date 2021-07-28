@@ -147,7 +147,12 @@ class Game extends React.Component{
             })
 
         }else{
-            console.log("esperar turno")
+            Swal.fire({
+                title: 'Turno del oponente',
+                icon: 'error',
+                showCancelButton: false,
+                timer:2000
+            })
         }
         
         
@@ -170,7 +175,6 @@ class Game extends React.Component{
 
     clearEmit(){
         socket.emit('limpiar')
-        
     }
 
     render(){

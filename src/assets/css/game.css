@@ -6,6 +6,9 @@
     background-color: rgb(18, 37, 88);
     color: rgb(255, 255, 255);
 }
+.info{
+    text-align: center
+}
 
 h1{
     text-align: center;
@@ -28,4 +31,14 @@ h1{
     height: 180px;
     max-width: 33.33%;
     font-size: 7em;
+    transition: 0.5s;
+}
+
+#tablero>input:hover{
+    width: 2000px;
+    height: 180px;
+    max-width: 33.33%;
+    font-size: 7em;
+    background-color: rgb(10, 57, 110);
+    color: #FFFFFF;
 }
