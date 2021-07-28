@@ -191,9 +191,6 @@ class Game extends React.Component{
                     <input type="Button" id="7" name="b8" onClick={this.changeValue.bind(this)} defaultValue={this.state.b8}></input>
                     <input type="Button" id="8" name="b9" onClick={this.changeValue.bind(this)} defaultValue={this.state.b9}></input>
                 </div>
-                <div>
-                    <input type="Button" defaultValue="Reiniciar" onClick={this.clearEmit.bind(this)}></input>
-                </div>
             </div>
 
         )
