@@ -1,7 +1,8 @@
 import React from "react"
 import { io } from 'socket.io-client'
-import Box from "./box"
 import "../assets/css/game.css"
+import Swal from 'sweetalert2'
+
 let socket;
 
 class Game extends React.Component{
@@ -28,6 +29,8 @@ class Game extends React.Component{
             b8:"",
             b9:""
         }
+        this.wins=0
+        this.loses=0
         this.marca=""
         this.marcaOpponnent=""
         this.turno=false
@@ -81,15 +84,53 @@ class Game extends React.Component{
             if(this.arrayList[this.array[x][0]]== "X" &&
             this.arrayList[this.array[x][1]]== "X" &&
             this.arrayList[this.array[x][2]]== "X" ){
-                console.log("Gano X")
+                if(this.marca=="X"){
+                    Swal.fire({
+                        title: 'Has ganado!!',
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonText: 'Volver a jugar!',
+                        timer:5000
+                      })
+                      this.wins++
+                }else{
+                    Swal.fire({
+                        title: 'Has perdido!!',
+                        icon: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'Volver a jugar!',
+                        timer:5000
+                      })
+                    this.loses++
+                }
                 
+                this.clearEmit()
             }
         }
         for (let x = 0; x < this.array.length; x++) {
             if(this.arrayList[this.array[x][0]]== "O" &&
             this.arrayList[this.array[x][1]]== "O" &&
             this.arrayList[this.array[x][2]]== "O" ){
-                console.log("Gano O")
+                if(this.marca=="O"){
+                    Swal.fire({
+                        title: 'Has ganado!!',
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonText: 'Volver a jugar!',
+                        timer:5000
+                      })
+                    this.wins++
+                }else{
+                    Swal.fire({
+                        title: 'Has perdido!!',
+                        icon: 'warning',
+                        showCancelButton: false,
+                        confirmButtonText: 'Volver a jugar!',
+                        timer:5000
+                      })
+                    this.loses++
+                }
+                this.clearEmit()
             }
         }
 
@@ -104,7 +145,6 @@ class Game extends React.Component{
             this.setState({
                 [pos] : this.marca
             })
-            this.comprobarGanador()
 
         }else{
             console.log("esperar turno")
@@ -114,6 +154,7 @@ class Game extends React.Component{
     }
 
     clearBtns(){
+        this.arrayList=[[],[],[],[],[],[],[],[],[]]
         this.setState({
             b1:"",
             b2:"",
@@ -137,6 +178,8 @@ class Game extends React.Component{
         
             <div className="container">
                 <h1 className="title mt-3">Tic Tac Toe</h1>
+                <h3>Wins: {this.wins}</h3>
+                <h3>Loses: {this.loses}</h3>
                 <div id="tablero">
                     <input type="Button" id="0" name="b1" onClick={this.changeValue.bind(this)} defaultValue={this.state.b1}></input>
                     <input type="Button" id="1" name="b2" onClick={this.changeValue.bind(this)} defaultValue={this.state.b2}></input>
