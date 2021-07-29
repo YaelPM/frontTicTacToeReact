@@ -33,6 +33,8 @@ class Game extends React.Component{
         this.loses=0
         this.marca=""
         this.marcaOpponnent=""
+        this.socketOpponentId=""
+        this.socketId=""
         this.turno=false
         this.arrayList=[[],[],[],[],[],[],[],[],[]]
         
@@ -41,6 +43,8 @@ class Game extends React.Component{
         socket = io.connect('ws://localhost:3001')  //'ws://localhost:3000'
         socket.on('connection',  (data) =>{
             console.log(data)
+            this.socketId=socket.id
+            console.log(this.socketId)
             this.marca="X"
             this.marcaOpponnent="O"
         } )
@@ -50,10 +54,20 @@ class Game extends React.Component{
 
         socket.emit('listo')
 
-        socket.on('cambio', (data)=>{
-            this.marca="O"
-            this.marcaOpponnent="X"
-            this.turno=true
+        socket.on('segundo', (data)=>{
+            if(this.socketId!=""){
+                this.socketOpponentId=data
+                this.marca="O"
+                this.marcaOpponnent="X"
+                this.turno=true
+                console.log(this.socketOpponentId)
+            }
+        })
+        socket.on('primero', (data)=>{
+            if(this.socketId!=""){
+                this.socketOpponentId=data
+                console.log(this.socketOpponentId)
+            }    
         })
 
         socket.on('clear', ()=>{
@@ -63,19 +77,20 @@ class Game extends React.Component{
 
         socket.on('msj-output-client', (data) => {
             console.log(data);
-            let posicion= data.posicion
-            this.arrayList[data.index]=data.mrc
-            this.setState({
-                [posicion] : data.mrc
-            })
-            this.comprobarGanador()
+            if(data.idOpponent== this.socketId){
+                let posicion= data.posicion
+                this.arrayList[data.index]=data.mrc
+                this.setState({
+                    [posicion] : data.mrc
+                })
+                this.comprobarGanador()
 
-            if(this.turno==false){
-                this.turno=true
-            }else{
-                this.turno=false
+                if(this.turno==false){
+                    this.turno=true
+                }else{
+                    this.turno=false
+                }
             }
-            
         });
 
     }
@@ -140,11 +155,12 @@ class Game extends React.Component{
         let idx= e.target.id
 
         if (this.turno==true) {
-            socket.emit('msj-input-server', { index: idx, posicion: pos, mrc: this.marca })
+            socket.emit('msj-input-server', { index: idx, posicion: pos, mrc: this.marca, idOpponent: this.socketOpponentId })
             this.arrayList[idx]=this.marca
             this.setState({
                 [pos] : this.marca
             })
+            this.turno=false
 
         }else{
             Swal.fire({
